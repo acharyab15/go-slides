@@ -20,13 +20,13 @@ _A_lot_of_italic_text_
 .image Golang-Logo.jpg 100 200
 
 * Dsiplay and highlight code
-.code hello.go
+.code sample-files/hello.go
 
 Display partial code
-.code hello.go /^//START/,/^//END/ HL12
+.code sample-files/hello.go /^//START/,/^//END/ HL12
 
 * Run your Go code
-.play hello.go
+.play sample-files/hello.go
 
 * Bullet Points
 - First bullet point
