@@ -1,15 +1,81 @@
 Lenslocked.com 
-A photo sharing website
-
+A photo gallery application
 
 23 Nov 2020
 
 Bipeen Acharya
 acharyabipeen@gmail.com
 
-* Slide 1 Title
-Test slide 1
+* A basic web application
+.play main.go
 
+* Adding a contact and 404 page
+.play main-new.go /^//START/,/^//END/
+
+* Templates
+
+* What are templates?
+- Text files to create dynamic content
+* Mad Libs
+.image mad-lib.png 
+* What are templates?
+- Text files to create dynamic content
+- Go templates, Instead of "noun" or "adverb", use variables.
+- For example, template for galleries; then the images we show are based on specific gallery viewed.
+
+* Why templates?
+- Create web pages with dynamic content.
+- Scalable: Putting HTML inside of strings in Go code won't work in the long run. 
+- Prevent rewrite: Same navigation bar on every page without rewrites.
+- Logic: "Sign out" button if user signed in, otherwise "Sign In" and "Sign Up"
+
+* Creating a template (hello.gohtml)
+.code exp/hello.gohtml
+
+* Creating a template
+.play exp/main.go
+
+* Model-View-Controller(MVC)
+* Model-View-Controller(MVC)
+Architectural pattern designed to help organize applications by separating code based on what it is responsible for
+
+Has three distinct roles:
+- Models
+- Views
+- Controllers
+
+* Views
+- Responsible for rendering data.
+- In our case, HTML code to return to user's browser.
+- As little logic as possible.
+
+* Controllers
+- Handle business logic for a web request.
+- Won't directly create views, update data in database
+- Instead use views and models to do these things
+- Air traffic controllers --> don't do any piloting, tell everyone what to do for smooth operation
+- Shouldn't have too much logic in it, but pass data around to different pieces of the application
+
+* Models
+- Interacting with raw data (database, data from other APIs/services)
+Example:
+- User accounts are represented in the database as user objects.
+- *User* model that represents that data in our database and handles things like updating a user's contact info. 
+
+* Walking through a web request
+.image mvc.png 500 700
+ 
+* Walking through a web request
+.image mvc-return.png 600 500
+
+* First views
+.play first-views/main.go /^//START/,/^//END/
+
+* Go project structure
+* Data models
+* Template
+* Validation
+* Go routers
 * Format your Slides
 Let's try *bold*.
 How do you like _italic_?
