@@ -1,0 +1,34 @@
+Lenslocked.com 
+A photo sharing website
+
+
+23 Nov 2020
+
+Bipeen Acharya
+acharyabipeen@gmail.com
+
+* Slide 1 Title
+Test slide 1
+
+* Format your Slides
+Let's try *bold*.
+How do you like _italic_?
+`Program` `Font`
+_A_lot_of_italic_text_
+
+* Images
+.image Golang-Logo.jpg 100 200
+
+* Dsiplay and highlight code
+.code hello.go
+
+Display partial code
+.code hello.go /^//START/,/^//END/ HL12
+
+* Run your Go code
+.play hello.go
+
+* Bullet Points
+- First bullet point
+- One more
+- Last one!
