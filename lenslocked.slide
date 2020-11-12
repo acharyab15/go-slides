@@ -303,20 +303,21 @@ Pepper
 - Remember tokens
 
 : Cookies
-: Data stored on a user's computer, and not on servers.
-: Basically a key, value
-: Information can be stored in a cookie
-: Not gonna go over creating cookies code
+: - Data stored on a user's computer, and not on servers.
+: - Basically a key, value
+: - Information can be stored in a cookie
+: - Not gonna go over creating cookies code
 
 : Securing cookies
-: Sign and store a hash of the data. So if somebody changes their cookies, the hash would change and we would know it was invalid.
-: A secret key would be stored on the server.
-: JWT kinda work that way. Data is visible by anyone, but editing data isn't possible because not eveyrone knows the secret key.
+: - Sign and store a hash of the data. So if somebody changes their cookies, the hash would change and we would know it was invalid.
+: - A secret key would be stored on the server.
+: - JWT kinda work that way. Data is visible by anyone, but editing data isn't possible because not eveyrone knows the secret key.
 
 : Remember tokens
-: Random byte arrays to identify a user
-: Store hashes of remember tokens
-: HMAC uses a secret key to sign data, and then uses a hashing function to hash the signed data.
+: - Random byte arrays to identify a user
+: - Store hashes of remember tokens
+: - HMAC uses a secret key to sign data, and then uses a hashing function to hash the signed data.
+
 
 * Demo
 
@@ -385,4 +386,3 @@ git checkout normalize
 git checkout master
 go run main.go
 
-* Thank you!!
