@@ -1,3 +1,6 @@
+* Jon Calhoun
+    - Really cool guy who is easy to learn from
+    - Reminds me of Cal, of course our Cal is more handsome, but mannerisms kind of
 
 * A basic web application
 
@@ -26,6 +29,11 @@ main().
     - Based on the path, we render a certain page. 
     - Otherwise, 404 using WriteHeader.
 
+* Routers
+    - net/http.ServeMux: Straightforward router, great for simple web apps. Lacks some features and need to write a lot on our own. We can add to it for applications, but not worth it.
+    - github.com/julienschmidt/httprouter: popular router. simple, fast, efficient. outperforms many other routers. 
+    - gorilla/mux.Router: one of the most popular routers. supports everything most people need. slightly heavy, but not that much
+
 * What are templates?
     - Mad Libs are an example of a template used to create dynamic content.
     - one person asks for specific words (noun, verb, place, part of a car) without giving them context and once gathered, it is read aloud.
@@ -33,6 +41,9 @@ main().
     - template for our galleries. images showing up will change based on specific gallery etc.
 
 * Why templates?
+    - We have been putting html inside of strings. That won't work to scale it
+    - Templates can be used to prevent duplication. A navbar template that can then be used in each page.
+    - Add simple logic. Show a sign out button, if a user is logged in. Show sign in and sign up if logged out.
 
 * Creating a template
     - Parse the hello.gohtml template file. Try to open the template file and validate it.

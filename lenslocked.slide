@@ -1,27 +1,97 @@
 Lenslocked.com 
 A photo gallery application
 
-23 Nov 2020
+13 Nov 2020
 
 Bipeen Acharya
 acharyabipeen@gmail.com
 
+: Haven't done a presentation in a while. Used to do a lot of these in school. but not lately.
+: I also worked on 95% of this project months ago, but finished the last 5% this weekend, so I might have forgotten stuff, so I'll try my best but we'll see.
+: Let me know if I am moving too fast
+: Let's have some fun!!
+
+* DEMO!!
+.link http://167.71.118.254:3000/ Lenslocked.com
+
+: Signup/Signin
+: Validation fields
+: Navigation bar
+: New/View/Edit/Delete
+: Everybody please sign up and add a photo. Appreciate it
+: Albums -- thai basil that susie from the service center shared last year. 
+
+* Web Development with Go (Jon Calhoun)
+.image jon.png _ 200
+- Web developer, author, teacher
+- Worked at Google
+- Started EasyPost: a shipping API
+- Y Combinator
+- Now teaches Go to new/experienced developers
+- Reminds me of Cal :)
+
+: Part of the web development with go course
+: Really cool guy who is easy to learn from
+: Worked at Google for a little before he quit to start EasyPost which is a shipping API for shipping basically.
+: Got picked up by YCombinator not long after.
+: Reminds me of Cal, of course our Cal is more handsome, but mannerisms kind of
 * A basic web application
 .play main.go
 
+: package main -- Declares what package the code is a part of. the main package, we want to have application start by running the main() function.
+: imports -- tell the compiler which packages you intend to use in the code. 
+:    - fmt: format strings and write them to different places. 
+:    - net/http: create application that responds to web requests, make web requests to other servers.
+
+: handlerfunc(...) -- process incoming web requests. 
+:    - everytime someone visits the website, the code in handlerFunc(...) gets run and determines what to return to the visitor. 
+:    - Handlers take two arguments 
+:        - http.ResponseWriter(w): allows us to modify the response that we want to send to whoever visits the website. write to response body. name response writer.
+:        - http.Request(r): access data from the web request. e.g get users email address and password during sign up etc.
+:    - fmt.Fprint to write the HTML string Welcome to my awesome site to the http.ResponseWriter.
+
+: main().
+:    - handlerFunc is the function to handle all web requsts going to our server with path /.
+:    - any path like "some-other-path" would still work
+:    - http.ListenAndServe starts up a web server listening on port 3000 using the default http handlers
+: Hit the run button and demo on browser
+
 * Adding a contact and 404 page
-.play main-new.go /^//START/,/^//END/
+.play mainnew/main-new.go /^//START/,/^//END/
+: Adding a contact and 404 page
+:    - We get a URL from the Request object. 
+:    - It has a Path that returns the path of the URL. 
+:    - Based on the path, we render a certain page. 
+:    - Otherwise, 404 using WriteHeader.
+
+* Routers
+- net/http.ServeMux
+- github.com/julienschmidt/httprouter
+- gihub.com/gorilla/mux.Router
+:    - net/http.ServeMux: Straightforward router, great for simple web apps. Lacks some features and need to write a lot on our own. We can add to it for applications, but not worth it.
+:    - github.com/julienschmidt/httprouter: popular router. simple, fast, efficient. outperforms many other routers. 
+:    - gorilla/mux.Router: one of the most popular routers. supports everything most people need. slightly heavy, but not that much
+
+* Break up handlers into functions
+.code first-views/main.go /^//START/,/^//END/
+* Using gorilla/mux
+.code first-views/main.go /^//STARTMAIN/,/^//ENDMAIN/
 
 * Templates
-
 * What are templates?
 - Text files to create dynamic content
+
 * Mad Libs
 .image mad-lib.png 
+:    - Mad Libs are an example of a template used to create dynamic content.
+:    - one person asks for specific words (noun, verb, place, part of a car) without giving them context and once gathered, it is read aloud.
+
 * What are templates?
 - Text files to create dynamic content
 - Go templates, Instead of "noun" or "adverb", use variables.
 - For example, template for galleries; then the images we show are based on specific gallery viewed.
+:    - template in Go very similar, but instead of noun/adverb, variables are used.
+:    - template for our galleries. images showing up will change based on specific gallery etc.
 
 * Why templates?
 - Create web pages with dynamic content.
@@ -29,11 +99,25 @@ acharyabipeen@gmail.com
 - Prevent rewrite: Same navigation bar on every page without rewrites.
 - Logic: "Sign out" button if user signed in, otherwise "Sign In" and "Sign Up"
 
-* Creating a template (hello.gohtml)
+:    - We have been putting html inside of strings. That won't work to scale it
+:    - Templates can be used to prevent duplication. A navbar template that can then be used in each page.
+:    - Add simple logic. Show a sign out button, if a user is logged in. Show sign in and sign up if logged out.
+
+* Creating a template (exp/hello.gohtml)
 .code exp/hello.gohtml
 
-* Creating a template
+Main
+
 .play exp/main.go
+
+: Creating a template
+:    - Parse the hello.gohtml template file. Try to open the template file and validate it.
+:    - Create a data variable, which is an anonymous struct, with a Name field. Set Name to John Smith.
+:    - Execute the template, passing two things
+:        Where we want to write the output
+:        The data to be used when executing the template
+
+
 
 * Model-View-Controller(MVC)
 * Model-View-Controller(MVC)
@@ -49,6 +133,8 @@ Has three distinct roles:
 - In our case, HTML code to return to user's browser.
 - As little logic as possible.
 
+: Given a specific page that we want to render, and data for that page, view
+
 * Controllers
 - Handle business logic for a web request.
 - Won't directly create views, update data in database
@@ -62,39 +148,241 @@ Example:
 - User accounts are represented in the database as user objects.
 - *User* model that represents that data in our database and handles things like updating a user's contact info. 
 
+:    - User accounts are represented in the database as user objects.
+:    - User model representative of that data in our database.
+:    - Handles stuff like updating user's contact information in the database.
 * Walking through a web request
-.image mvc.png 500 700
+.image mvc.png _ 700
  
+:    - A user submits an update to their contact information
+:    - The router decides that the UserController should be used
+:    - The UserController uses the User model to update the user’s contact info
 * Walking through a web request
-.image mvc-return.png 600 500
+.image mvc-return.png _ 500
 
-* First views
-.play first-views/main.go /^//START/,/^//END/
+:    - The User model returns the updated data to the UserController
+:    - The UserController uses the ShowUser view to render the correct template
+:    - The end user sees the updated User page in their browser
 
-* Go project structure
-* Data models
-* Template
-* Validation
-* Go routers
-* Format your Slides
-Let's try *bold*.
-How do you like _italic_?
-`Program` `Font`
-_A_lot_of_italic_text_
+* Templates as Views
 
-* Images
-.image Golang-Logo.jpg 100 200
+Home View
 
-* Dsiplay and highlight code
-.code hello.go
+.code first-views/views/home.gohtml /^//START/,/^//END/
 
-Display partial code
-.code hello.go /^//START/,/^//END/ HL12
+Contact View
 
-* Run your Go code
-.play hello.go
+.code first-views/views/contact.gohtml /^//START/,/^//END/
 
-* Bullet Points
-- First bullet point
-- One more
-- Last one!
+: Templates are essentially used to build up the views
+
+* Named/Reusable Templates
+.code first-views/views/layouts/footer.gohtml /^//START/,/^//END/
+
+* View Type
+.code first-views/viewtype.go
+
+: Each page that needs a footer, the template will need to be used.
+: Everytime we add a new layout file, change code for each template we use. 
+: Create a view type that handles all of that logic. Reuse code and simplify maintenance.
+
+* Demo code
+- git checkout Creating-first-views
+- go run main.go
+: main.go
+: views/*
+: bootstrap: navbar, yield, footer
+: templates 
+
+* User Model
+.code user-model/users.go /^//START/,/^//END/
+
+: gorm.Model gives some fields like id, created_at, updated_at, deleted_at
+: so only declare name, email for now
+: sign up view but no inputs can be provided
+
+* UserService
+.code user-model/users.go /^//STARTUSER/,/^//ENDUSER/
+: Don't want to spread database specific code all across the codebase. So userService is an abstraction layer that hides the implementation detail.
+
+* Queries
+.code user-model/users.go /^//STARTBYID/,/^//ENDBYID/
+
+* Demo code
+- git checkout creating-user-model
+- go run main.go
+: models/users.go
+: main.go
+: - models.NewUserService()
+: - controllers.NewUsers()
+
+* Authentication System
+
+: One of the most important
+: Poorly execute strategy leaves data at risk
+: "Why not use a service?" -- it's worth understanding what goes into one
+: Customization
+
+* Hash passwords
+
+Hash Function
+
+.code authentication/hash.go /^//START/,/^//END/
+
+hash("jon")=3 and hash("password")=3
+
+BAD
+
+.link https://emn178.github.io/online-tools/sha256.html SHA256
+
+: A function that takes in any string value and translates to a number between 0 and 4. 
+: Count the numbers and use modulus (%) operator to get a number between 0 and 4.
+
+: Properties of hash functions
+: Two values must not convert to the same value
+: No way to go from hash value to the original string
+
+* Hash passwords
+- Store hashed passwords, not raw
+- If we don't know, intruders can't know
+
+: Instead of storing raw password, we store the hash of their password
+: If someone gets access, they don't know the password. only the hash.
+: But we can still validate the password by using the hash function each time to test with the stored value
+
+* Salt and pepper passwords
+
+Salt
+
+Adding random data to a user's password before hashing it.
+e.g "abc123" --> "abc123ja08d"
+
+When user enters it in the future, add their salt and hash it.
+
+: The use of the word "salt" is probably a reference to warfare in ancient times, when people would salt the wells or farmland to make it less hospitable. The Romans are sometimes supposed to have done this to Carthage in 146 BC.
+* Rainbow table attacks
+Salts protects against rainbow table attacks.
+
+List of possible passwords
+
+.code authentication/hash.go /^//STARTPW/,/^//ENDPW/
+
+List of hashes
+
+.code authentication/hash.go /^//STARTRAINBOW/,/^//ENDRAINBOW/
+: Password salts protect against rainbow tables.
+: A large list of possible passwords and hash of these.
+: If I know the hashing function (which is often public),
+: I could run the function on my passwords and store the results.
+: After stealing, I try to see if any matches the values in my rainbow table. If one matches, I know the original password by looking at the list of passwords.
+: By adding a random string to each password, the rainbow table becomes useless. password-salt2 password-salt1
+: Attacker would need to create a custom rainbow table for each user.
+
+
+* Salt and pepper passwords
+
+Pepper
+
+- Application specific instead of user specific
+- Universal pepper value
+- Unlike salt, pepper isn't stored in the database
+
+* Implementing password hashing for our users
+
+.code authentication/hash.go /^//STARTUSR/,/^//ENDUSR/
+
+: Password is never stored (guaranteed because of the "-" struct tag)
+: PasswordHash will be stored.
+
+: bcrypt.GenerateFromPassword() -- byte array and a cost function (how much memory to use to hash a password) -- just use Defaultcost
+
+* Remembering Users
+
+- Cookies
+- Securing cookies from tampering
+- Remember tokens
+
+: Cookies
+: Data stored on a user's computer, and not on servers.
+: Basically a key, value
+: Information can be stored in a cookie
+: Not gonna go over creating cookies code
+
+: Securing cookies
+: Sign and store a hash of the data. So if somebody changes their cookies, the hash would change and we would know it was invalid.
+: A secret key would be stored on the server.
+: JWT kinda work that way. Data is visible by anyone, but editing data isn't possible because not eveyrone knows the secret key.
+
+: Remember tokens
+: Random byte arrays to identify a user
+: Store hashes of remember tokens
+: HMAC uses a secret key to sign data, and then uses a hashing function to hash the signed data.
+
+* Demo
+
+git checkout authentication
+go run main.go
+Database
+
+: look at browswer for cookies
+: look at database for remember tokens
+
+* Normalizing and validating data
+
+- Validation: verifying data is acceptable.
+    Email is valid, not taken by another user.  
+    Every user has a password with at least eight characters in it.  
+
+
+- Normalization: data is in the format we expect.  
+    Phone number matches the format we expect.  
+    All email addresses to their lowercase equivalent.  
+
+: Validation is obvious for things to work
+: Why normalize? Makes things easier later. Looking for phone numbers in differnet formats is really terrible.
+
+* Separating responsibilities
+- Database interaction layer: Responsible for reading and writing data from database. No Validation
+- Validation and normalization layer: Responsible for verifying and transforming data into the state that our database layer expects.
+- Topmost layer that developers interact with: Defines method that can be used to interact with users. Expose some common functionality. e.g Authentication.
+
+
+* An example of layers with structs
+
+.code normalize/main.go /^//START/,/^//END/
+
+* An example of layers with structs
+
+.code normalize/main.go /^//STARTDB/,/^//ENDDB/
+
+* Code
+
+git checkout normalize
+
+: models/users.go:397
+
+* Galleries
+
+- Gallery model
+- GalleryService
+- Creating new galleries
+- Displaying galleries
+- Editing galleries
+- Deleting galleries
+
+* Adding images to galleries
+
+- Image upload form
+- Processing image uploads
+- Image service
+- Lookup image by gallery ID
+- Serve static files in go
+- Rendering images in columns
+- Letting users delete images
+
+* Final demo
+
+git checkout master
+go run main.go
+
+* Thank you!!
