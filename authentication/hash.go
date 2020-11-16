@@ -5,6 +5,8 @@ func hash(s string) int {
 	return len(s) % 5
 }
 
+hash("jon")=3 and hash("password")=3   *BAD* // HL
+
 //END OMIT
 
 //STARTPW OMIT
@@ -26,8 +28,8 @@ type User struct {
 	gorm.Model
 	Name         string
 	Email        string `gorm:"not null;unique_index"`
-	Password     string `gorm:"-"`
-	PasswordHash string `gorm:"not null"`
+	Password     string `gorm:"-"` // HL
+	PasswordHash string `gorm:"not null"` // HL
 }
 
 func (us *UserService) Create(user *User) error {

@@ -6,23 +6,29 @@ A photo gallery application
 Bipeen Acharya
 acharyabipeen@gmail.com
 
+: Present godoc package. Gets hosted in github at talks.godoc.org
 : Haven't done a presentation in a while. Used to do a lot of these in school. but not lately.
 : I also worked on 95% of this project months ago, but finished the last 5% this weekend, so I might have forgotten stuff, so I'll try my best but we'll see.
 : Let me know if I am moving too fast
 : Let's have some fun!!
 
-* DEMO!!
-.link http://167.71.118.254:3000/ Lenslocked.com
+* 
+
+.link http://167.71.118.254:3000/ DEMO!!
+
 
 : Signup/Signin
 : Validation fields
 : Navigation bar
 : New/View/Edit/Delete
 : Everybody please sign up and add a photo. Appreciate it
-: Albums -- thai basil that susie from the service center shared last year. 
+: Albums 
+: thai basil that susie from the service center shared last year. 
+: mango margherita -- not pretty but tasted pretty good.
 
 * Web Development with Go (Jon Calhoun)
 .image jon.png _ 200
+
 - Web developer, author, teacher
 - Worked at Google
 - Started EasyPost: a shipping API
@@ -68,6 +74,7 @@ acharyabipeen@gmail.com
 - net/http.ServeMux
 - github.com/julienschmidt/httprouter
 - gihub.com/gorilla/mux.Router
+.image funny-picture-it-hurts-when-ip.jpg 400 _
 :    - net/http.ServeMux: Straightforward router, great for simple web apps. Lacks some features and need to write a lot on our own. We can add to it for applications, but not worth it.
 :    - github.com/julienschmidt/httprouter: popular router. simple, fast, efficient. outperforms many other routers. 
 :    - gorilla/mux.Router: one of the most popular routers. supports everything most people need. slightly heavy, but not that much
@@ -78,17 +85,18 @@ acharyabipeen@gmail.com
 .code first-views/main.go /^//STARTMAIN/,/^//ENDMAIN/
 
 * Templates
+: Project uses templates heavily 
+: This is more UI and less Go but it's pretty cool how Go works with html natively using templates
+
 * What are templates?
 - Text files to create dynamic content
-
-* Mad Libs
-.image mad-lib.png 
-:    - Mad Libs are an example of a template used to create dynamic content.
+.image mad-libs.jpg _ 600
+:    - Mad Libs are great examples of a template used to create dynamic content.
 :    - one person asks for specific words (noun, verb, place, part of a car) without giving them context and once gathered, it is read aloud.
 
 * What are templates?
 - Text files to create dynamic content
-- Go templates, Instead of "noun" or "adverb", use variables.
+- Go templates, instead of "noun" or "adverb", use variables.
 - For example, template for galleries; then the images we show are based on specific gallery viewed.
 :    - template in Go very similar, but instead of noun/adverb, variables are used.
 :    - template for our galleries. images showing up will change based on specific gallery etc.
@@ -139,12 +147,15 @@ Has three distinct roles:
 - Handle business logic for a web request.
 - Won't directly create views, update data in database
 - Instead use views and models to do these things
-- Air traffic controllers --> don't do any piloting, tell everyone what to do for smooth operation
-- Shouldn't have too much logic in it, but pass data around to different pieces of the application
+.image air-traffic.jpg _ 400
+
+: Air traffic controllers --> don't do any piloting, tell everyone what to do for smooth operation
+: Shouldn't have too much logic in it, but pass data around to different pieces of the application
 
 * Models
 - Interacting with raw data (database, data from other APIs/services)
 Example:
+
 - User accounts are represented in the database as user objects.
 - *User* model that represents that data in our database and handles things like updating a user's contact info. 
 
@@ -186,9 +197,9 @@ Contact View
 : Everytime we add a new layout file, change code for each template we use. 
 : Create a view type that handles all of that logic. Reuse code and simplify maintenance.
 
-* Demo code
-- git checkout Creating-first-views
-- go run main.go
+* Code
+: git checkout Creating-first-views
+: go run main.go
 : main.go
 : views/*
 : bootstrap: navbar, yield, footer
@@ -208,9 +219,9 @@ Contact View
 * Queries
 .code user-model/users.go /^//STARTBYID/,/^//ENDBYID/
 
-* Demo code
-- git checkout creating-user-model
-- go run main.go
+* Code
+: git checkout creating-user-model
+: go run main.go
 : models/users.go
 : main.go
 : - models.NewUserService()
@@ -229,22 +240,21 @@ Hash Function
 
 .code authentication/hash.go /^//START/,/^//END/
 
-hash("jon")=3 and hash("password")=3
-
-BAD
-
 .link https://emn178.github.io/online-tools/sha256.html SHA256
-
 : A function that takes in any string value and translates to a number between 0 and 4. 
 : Count the numbers and use modulus (%) operator to get a number between 0 and 4.
 
 : Properties of hash functions
-: Two values must not convert to the same value
-: No way to go from hash value to the original string
+: Two values must not convert to the same value (Collision resistance)
+: No way to go from hash value to the original string (Pre-image resistance)
+
+: SHA256 converts any string to a 256 byte value
+: Used in a majority of applications.
 
 * Hash passwords
 - Store hashed passwords, not raw
 - If we don't know, intruders can't know
+.image incorrect-password.jpg
 
 : Instead of storing raw password, we store the hash of their password
 : If someone gets access, they don't know the password. only the hash.
@@ -261,7 +271,7 @@ When user enters it in the future, add their salt and hash it.
 
 : The use of the word "salt" is probably a reference to warfare in ancient times, when people would salt the wells or farmland to make it less hospitable. The Romans are sometimes supposed to have done this to Carthage in 146 BC.
 * Rainbow table attacks
-Salts protects against rainbow table attacks.
+Salts protect against rainbow table attacks.
 
 List of possible passwords
 
@@ -277,6 +287,7 @@ List of hashes
 : After stealing, I try to see if any matches the values in my rainbow table. If one matches, I know the original password by looking at the list of passwords.
 : By adding a random string to each password, the rainbow table becomes useless. password-salt2 password-salt1
 : Attacker would need to create a custom rainbow table for each user.
+: If I wanted to crack Joe's password, I would need to add Joe's salt value to each of these passwords, and create a table of hashes, with the hope that something matches.
 
 
 * Salt and pepper passwords
@@ -295,6 +306,7 @@ Pepper
 : PasswordHash will be stored.
 
 : bcrypt.GenerateFromPassword() -- byte array and a cost function (how much memory to use to hash a password) -- just use Defaultcost
+: reset the password value and store the passwordhash
 
 * Remembering Users
 
@@ -319,12 +331,10 @@ Pepper
 : - HMAC uses a secret key to sign data, and then uses a hashing function to hash the signed data.
 
 
-* Demo
+* Code
 
-git checkout authentication
-go run main.go
-Database
-
+: git checkout authentication
+: go run main.go
 : look at browswer for cookies
 : look at database for remember tokens
 
@@ -358,14 +368,13 @@ Database
 
 * Code
 
-git checkout normalize
-
+: git checkout normalize
 : models/users.go:397
 
 * Galleries
 
 - Gallery model
-- GalleryService
+- Gallery service
 - Creating new galleries
 - Displaying galleries
 - Editing galleries
@@ -381,8 +390,11 @@ git checkout normalize
 - Rendering images in columns
 - Letting users delete images
 
-* Final demo
+* Final Code 
 
-git checkout master
-go run main.go
+: git checkout master
+: go run main.go
 
+* 
+
+.image thankyou.jpeg _ 400
